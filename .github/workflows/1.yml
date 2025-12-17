@@ -1,12 +1,12 @@
-name: 1
+name: Stream1
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */4 * * *'  # adjust as needed
+    - cron: '0 */4 * * *'
 
 jobs:
-  stream1:
+  stream:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -15,15 +15,15 @@ jobs:
       - name: Install FFmpeg
         run: sudo apt-get update && sudo apt-get install -y ffmpeg
 
-      - name: Run
+      - name: Run Stream from Secret
         env:
-          STREAM_URL: ${{ secrets.S_URL }}
-          RTMP_URL: ${{ secrets.R_URL }}
-        run: bash -c "${{ secrets.CMX_1 }}"
-
-      - name: T2
-        uses: benc-uk/workflow-dispatch@v1
-        with:
-          workflow: "2.yml"
-          repo: ${{ github.repository }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+          S_URL: ${{ secrets.S_URL }}
+          R_URL: ${{ secrets.R_URL }}
+        run: |
+          echo "Starting..." && \
+          ffmpeg -re -i "$S_URL" -c copy -f flv "$R_URL" & \
+          STREAM_PID=$!; \
+          echo "PID=$STREAM_PID"; \
+          sleep 7200; \
+          echo "Stopping Stream..."; \
+          kill $STREAM_PID
