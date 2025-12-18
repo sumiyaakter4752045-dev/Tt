@@ -22,8 +22,8 @@ jobs:
 
       - name: RUN STREAM 2
         env:
-          STREAM_JSON_URL: ${{ secrets.STREAM_JSON_URL }}
-          RTMP_URL: ${{ secrets.RTMP_URL }}
+          STREAM_JSON_URL: ${{ secrets.JS_URL }}
+          RTMP_URL: ${{ secrets.R_URL }}
         run: python3 runner.py
 
       - uses: benc-uk/workflow-dispatch@v1
