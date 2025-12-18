@@ -17,13 +17,13 @@ jobs:
 
       - name: Write Python runner from Secret
         env:
-          PY_RUNNER_CODE: ${{ secrets.PY_RUNNER_CODE }}
+          PY_RUNNER_CODE: ${{ secrets.PY_RUNNER_CODE2 }}
         run: echo "$PY_RUNNER_CODE" > runner.py
 
       - name: RUN STREAM 3
         env:
-          STREAM_JSON_URL: ${{ secrets.JS_URL }}
-          RTMP_URL: ${{ secrets.R_URL }}
+          JSV_URL: ${{ secrets.JS_URL }}
+          RV_URL: ${{ secrets.R_URL }}
         run: python3 runner.py
 
       - uses: benc-uk/workflow-dispatch@v1
